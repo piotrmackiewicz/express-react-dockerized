@@ -2,10 +2,10 @@
 
 ## Setup
 ```
-cd client && docker build . && cd ../server && docker build . && cd ../
+make build
 ```
 
 ## Usage
 ```
-docker-compose up
+make up
 ```
