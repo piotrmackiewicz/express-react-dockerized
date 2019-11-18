@@ -9,20 +9,29 @@ function App() {
   const [users, setUsers] = useState([]);
 
   const addTestUser = () => {
-    const testUserData = {
-      name: `User #${Math.round(Math.random() * 100000)}`,
-      role: 'normal user',
-      age: Math.round(Math.random() * 100)
-    }
-
-    return UserService.postUser(testUserData);
+    (async () => {
+      const testUserData = {
+        name: `User #${Math.round(Math.random() * 100000)}`,
+        role: 'normal user',
+        age: Math.round(Math.random() * 100)
+      }
+      try {
+        return await UserService.postUser(testUserData)
+      } catch (err) {
+        alert(err)
+      }
+    })()
   }
 
   const fetchUsers = () => {
-    UserService.getUsers()
-      .then(res => {
-        setUsers(res)
-      })
+    (async () => {
+      try {
+        const users = await UserService.getUsers()
+        setUsers(users)
+      } catch (err) {
+        alert(err)
+      }
+    })();
   }
 
   useEffect(() => {

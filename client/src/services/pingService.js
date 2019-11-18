@@ -1,12 +1,5 @@
-const getPing = () => {
-    return fetch(`${process.env.REACT_APP_API_URL}/ping`)
-        .then(res => {
-            if (!res.ok) {
-                throw Error(`${res.status} ${res.statusText}`)
-            } else {
-                return res.json()
-            }
-        })
-}
+import Api from '../libs/Api'
+
+const getPing = () => Api.get('/ping')
 
 export { getPing };
