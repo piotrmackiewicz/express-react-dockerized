@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
   const [test, setTest] = useState('');
 
-  fetch('http://localhost:5000/api/ping')
-  .then(res => res.json())
-  .then(result => {
-    setTest(result)
-  });
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/ping`)
+      .then(res => res.json())
+      .then(res => setTest(res.data))
+  })
 
   return (
     <div className="App">

@@ -15,7 +15,10 @@ const router = express.Router();
 
 router.get('/ping', (_req, res) => {
   res.statusCode = 200;
-  res.send('pong')
+  const response = {
+    data: 'pong'
+  }
+  res.send(response)
 });
 
 app.use('/api', router);
