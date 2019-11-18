@@ -1,22 +1,22 @@
 version: "3"
 services:
   frontend:
-    container_name: rent-house-app-frontend
+    container_name: express-react-dockerized_frontend
     build:
       context: ./client
       dockerfile: Dockerfile
-    image: webcitron/rent-house-app-frontend
+    image: piotrmackiewicz/express-react-dockerized_frontend
     ports:
     - "3000:3000"
     volumes:
     - ./client:/client
     - /client/node_modules
   backend:
-    container_name: rent-house-app-backend
+    container_name: express-react-dockerized_backend
     build:
       context: ./server
       dockerfile: Dockerfile
-    image: webcitron/rent-house-app-backend
+    image: piotrmackiewicz/express-react-dockerized_backend
     ports:
     - "5000:5000"
     volumes:
