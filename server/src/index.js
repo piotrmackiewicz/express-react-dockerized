@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 const router = express.Router();
 
-router.get('/ping', (req, res) => {
+router.get('/ping', (_req, res) => {
   res.statusCode = 200;
   res.send('pong')
 });
