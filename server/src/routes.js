@@ -3,7 +3,7 @@ const router = express.Router();
 import User from './models/User';
 
 router.get('/ping', (_req, res) => {
-    res.status(200).json({ data: 'pong' })
+    return res.status(200).json({ data: 'pong' })
 });
 
 router.post('/user', async (req, res) => {
@@ -15,21 +15,19 @@ router.post('/user', async (req, res) => {
 
     try {
         const newUser = await user.save()
-        res.status(201).json(newUser)
+        return res.status(201).json(newUser)
     } catch (err) {
-        res.status(400).json({ message: err.message })
+        return res.status(400).json({ message: err.message })
     }
 })
 
 router.get('/user', async (_req, res) => {
     try {
         const users = await User.find();
-        res.json(users);
+        return res.json(users);
     } catch (err) {
-        res.status(500).json({ message: err.message })
+        return res.status(500).json({ message: err.message })
     }
-
-    return res.status(200).send(users)
 })
 
 export default router;

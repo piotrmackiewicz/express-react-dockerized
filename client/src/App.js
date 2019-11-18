@@ -27,10 +27,14 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const test = await PingService.getPing()
-      setTest(test.data)
-      const users = await UserService.getUsers()
-      setUsers(users)
+      try {
+        const test = await PingService.getPing()
+        setTest(test.data)
+        const users = await UserService.getUsers()
+        setUsers(users)
+      } catch (err) {
+        alert(err)
+      }
     })();
   }, [])
 
