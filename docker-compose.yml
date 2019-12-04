@@ -1,7 +1,7 @@
 version: "3"
 services:
   client:
-    container_name: express-react-dockerized_client
+    container_name: react-socket-io-app_client
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -11,14 +11,12 @@ services:
     volumes:
       - ./client:/client
       - /client/node_modules
-    environment:
-      - "API_URL=http://localhost:5000/api"
     depends_on:
       - server
     networks:
-      - express-react-dockerized-network
+      - react-socket-io-app-network
   server:
-    container_name: express-react-dockerized_server
+    container_name: react-socket-io-app_server
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -28,21 +26,9 @@ services:
     volumes:
       - ./server:/server
       - /server/node_modules
-    depends_on:
-      - mongodb
     networks:
-      - express-react-dockerized-network
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    volumes:
-      - ./data-node:/data/db
-    ports:
-      - ${MONGODB_PORT}:27017
-    command: mongod --noauth
-    networks:
-      - express-react-dockerized-network
+      - react-socket-io-app-network
 
 networks:
-    express-react-dockerized-network:
+    react-socket-io-app-network:
         driver: bridge
