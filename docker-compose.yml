@@ -29,10 +29,10 @@ services:
       - ./server:/server
       - /server/node_modules
     depends_on:
-      - mongodb
+      - database
     networks:
       - network
-  mongodb:
+  database:
     image: mongo
     container_name: express-react-mongo-dockerized_database
     volumes:
