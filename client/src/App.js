@@ -1,22 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import socketIOClient from 'socket.io-client'
+import * as PingService from './services/pingService';
+import * as UserService from './services/userService';
+import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [color, setColor] = useState('white');
+  const [test, setTest] = useState('');
+  const [users, setUsers] = useState([]);
 
-  const send  = () => {
-    const socket = socketIOClient(`${process.env.REACT_APP_API_URL}/socket/color`)
-    socket.emit('change color', color)
+  const addTestUser = () => {
+    (async () => {
+      const testUserData = {
+        name: `User #${Math.round(Math.random() * 100000)}`,
+        role: 'normal user',
+        age: Math.round(Math.random() * 100)
+      }
+      try {
+        return await UserService.postUser(testUserData)
+      } catch (err) {
+        alert(err)
+      }
+    })()
+  }
+
+  const fetchUsers = () => {
+    (async () => {
+      try {
+        const users = await UserService.getUsers()
+        setUsers(users)
+      } catch (err) {
+        alert(err)
+      }
+    })();
   }
 
   useEffect(() => {
     (async () => {
       try {
-        const socket = socketIOClient(`${process.env.REACT_APP_API_URL}/socket/color`)
-        socket.on('change color', (colo) => {
-          document.body.style.backgroundColor = colo
-        })
+        const test = await PingService.getPing()
+        setTest(test.data)
+        const users = await UserService.getUsers()
+        setUsers(users)
       } catch (err) {
         alert(err)
       }
@@ -24,10 +48,17 @@ function App() {
   }, [])
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <button onClick={send}>Change Color</button>
-      <button id="red" onClick={() => setColor('red')}>red</button>
-      <button id="blue" onClick={() => setColor('blue')}>blue</button>  
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1>Awesome boilerplate of React App with Express API and Mongo Database!</h1>
+      </header>
+      <main>
+        <p>Response from ping: {test}</p>
+        <p>{JSON.stringify(users)}</p>
+        <div><button onClick={addTestUser}>Add Test User</button></div>
+        <div><button onClick={fetchUsers}>Fetch Users</button></div>
+      </main>
     </div>
   );
 }
